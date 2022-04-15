@@ -4,11 +4,11 @@ provider "azurerm" {
 }
 
 data "azurerm_resource_group" "RG_Creation" {
-  name = "avs-sddc-shared-uks-04-rg"
+  name = var.RG
 }
 
 resource "azurerm_vmware_private_cloud" "Ricky_Test" {
-  name                = "AVS-SA-UKS-RickyTest02"
+  name                = var.SDDC_Name
   resource_group_name = data.azurerm_resource_group.RG_Creation.name
   location            = data.azurerm_resource_group.RG_Creation.location
   sku_name            = "av36"
@@ -17,7 +17,7 @@ resource "azurerm_vmware_private_cloud" "Ricky_Test" {
     size = 3
   }
 
-  network_subnet_cidr         = "10.34.0.0/22"
+  network_subnet_cidr         = var.MGMT_CIDR
   internet_connection_enabled = true 
 }
 
